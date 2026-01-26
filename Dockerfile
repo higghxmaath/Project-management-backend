@@ -1,37 +1,16 @@
-FROM php:8.2-fpm
+FROM richarvey/nginx-php-fpm:2.0.0
 
-# Install system deps
-RUN apt-get update && apt-get install -y \
-    nginx \
-    git \
-    unzip \
-    libzip-dev \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    curl \
-    && docker-php-ext-install pdo pdo_mysql zip mbstring exif pcntl bcmath gd
+COPY . /var/www/html
 
-# Install Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+WORKDIR /var/www/html
 
-# Set working directory
-WORKDIR /var/www
-
-# Copy project files
-COPY . /var/www
-
-# Install PHP deps
 RUN composer install --no-dev --optimize-autoloader
-RUN ls -la /var/www && ls -la /var/www/vendor
 
+RUN chmod -R 775 storage bootstrap/cache
 
-# Fix permissions
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
-
-# Copy nginx config
-COPY ./docker/nginx.conf /etc/nginx/nginx.conf
+ENV WEBROOT /var/www/html/public
+ENV PHP_ERRORS_STDERR 1
+ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS 0
+ENV RUN_SCRIPTS 1
 
 EXPOSE 80
-
-CMD service nginx start && php-fpm
