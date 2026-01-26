@@ -1,7 +1,6 @@
-FROM richarvey/nginx-php-fpm:2.0.0
+FROM richarvey/nginx-php-fpm:php82
 
 COPY . /var/www/html
-
 WORKDIR /var/www/html
 
 RUN composer install --no-dev --optimize-autoloader
