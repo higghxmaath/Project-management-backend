@@ -1,31 +1,25 @@
 FROM php:8.2-fpm
 
-# System deps
 RUN apt-get update && apt-get install -y \
+    nginx \
     git \
     unzip \
-    curl \
-    libzip-dev \
-    libonig-dev \
     libpng-dev \
-    libicu-dev \
-    libpq-dev \
-    supervisor
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
+    zip \
+    curl
 
-# PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql zip intl
+RUN docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl
 
-# Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
+COPY . /var/www
 WORKDIR /var/www
 
-COPY . .
+RUN chown -R www-data:www-data /var/www
 
-RUN composer install --no-dev --optimize-autoloader
+COPY docker/nginx.conf /etc/nginx/nginx.conf
 
-RUN chown -R www-data:www-data storage bootstrap/cache
+EXPOSE 10000
 
-EXPOSE 9000
-
-CMD ["php-fpm"]
+CMD service nginx start && php-fpm
