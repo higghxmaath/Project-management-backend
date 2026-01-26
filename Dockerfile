@@ -24,6 +24,8 @@ COPY . /var/www
 # Install PHP deps
 RUN composer install --no-dev --optimize-autoloader
 RUN ls -la /var/www && ls -la /var/www/vendor
+RUN mkdir -p /var/www/storage/framework/{cache,sessions,views} \
+    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 
 # Fix permissions
