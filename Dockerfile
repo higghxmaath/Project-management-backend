@@ -23,6 +23,8 @@ COPY . /var/www
 
 # Install PHP deps
 RUN composer install --no-dev --optimize-autoloader
+RUN ls -la /var/www && ls -la /var/www/vendor
+
 
 # Fix permissions
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
