@@ -8,7 +8,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/__migrate', function () {
-//     \Artisan::call('migrate', ['--force' => true]);
-//     return nl2br(\Artisan::output());
-// });
+Route::get('/__migrate', function () {
+    \Artisan::call('migrate', ['--force' => true]);
+    return nl2br(\Artisan::output());
+});
