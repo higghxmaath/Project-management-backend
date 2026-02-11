@@ -78,4 +78,22 @@ class BoardController extends Controller
             ->limit(20)
             ->get();
     }
+
+        public function indexByProject(string $projectId)
+    {
+        $project = Project::findOrFail($projectId);
+
+        ProjectAuthorizationService::check($project, 'viewer');
+
+        $boards = Board::where('project_id', $projectId)
+            ->latest()
+            ->get();
+
+        return response()->json($boards);
+    }
+
+
+
 }
+
+        

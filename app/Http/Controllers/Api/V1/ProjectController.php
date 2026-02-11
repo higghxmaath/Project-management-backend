@@ -8,6 +8,7 @@ use App\Models\ProjectMember;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Services\ActivityLogger;
+use App\Services\ProjectAuthorizationService;
 
 class ProjectController extends Controller
 {   
@@ -63,5 +64,17 @@ class ProjectController extends Controller
 
         return response()->json($project, Response::HTTP_CREATED);
     }
+
+    
+    public function show(string $projectId)
+{
+    $project = Project::with('members')
+        ->findOrFail($projectId);
+
+    ProjectAuthorizationService::check($project, 'viewer');
+
+    return response()->json($project);
+}
+
 
 }

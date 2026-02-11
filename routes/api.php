@@ -55,6 +55,9 @@ Route::prefix('v1')->group(function () {
 
         Route::get('search', [SearchController::class, 'index']);
 
+        Route::get( 'projects/{projectId}/boards',[BoardController::class, 'indexByProject']);
+        Route::get('projects/{projectId}', [ProjectController::class, 'show']);
+
 
     });
 
