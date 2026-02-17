@@ -17,4 +17,12 @@ class Comment extends Model
             $model->id = (string) Str::uuid();
         });
     }
+
+            public function user()
+        {
+            return $this->belongsTo(User::class);
+        }
+
+
+
 }

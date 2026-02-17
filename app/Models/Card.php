@@ -27,4 +27,17 @@ class Card extends Model
     {
         return $this->belongsTo(BoardList::class, 'list_id');
     }
+
+    public function attachments()
+    
+    {
+        return $this->hasMany(Attachment::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+
 }

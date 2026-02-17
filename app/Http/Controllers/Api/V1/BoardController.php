@@ -59,8 +59,13 @@ class BoardController extends Controller
                 $q->orderBy('position');
             },
             'lists.cards' => function ($q) {
-                $q->orderBy('position');
+                $q->orderBy('position')
+                ->with([
+                    'comments.user:id,name',
+                    'attachments'
+                ]);
             },
+
             'members.user:id,name,email',
         ])->findOrFail($boardId);
 

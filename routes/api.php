@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\V1\ActivityController;
 use App\Http\Controllers\Api\V1\BoardMemberController;
 use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\SearchController;
+use App\Http\Controllers\Api\V1\AttachmentController;
 
 
 
@@ -57,6 +58,8 @@ Route::prefix('v1')->group(function () {
 
         Route::get( 'projects/{projectId}/boards',[BoardController::class, 'indexByProject']);
         Route::get('projects/{projectId}', [ProjectController::class, 'show']);
+
+        Route::post('/cards/{card}/attachments', [AttachmentController::class, 'store']);
 
 
     });
