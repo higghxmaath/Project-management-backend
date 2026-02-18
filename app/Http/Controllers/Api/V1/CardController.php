@@ -91,4 +91,14 @@ class CardController extends Controller
 
         return response()->json($card->fresh());
     }
+
+    public function destroy(Card $card)
+{
+    $card->delete();
+
+    return response()->json([
+        'message' => 'Card deleted'
+    ]);
+}
+
 }

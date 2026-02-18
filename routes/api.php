@@ -46,6 +46,13 @@ Route::prefix('v1')->group(function () {
         
         Route::post('boards/{boardId}/members', [BoardMemberController::class, 'store']);
         Route::delete('boards/{boardId}/members/{userId}', [BoardMemberController::class, 'destroy']);
+        Route::delete('/projects/{project}', [ProjectController::class, 'destroy']);
+        Route::delete('/boards/{board}', [BoardController::class, 'destroy']);
+        Route::delete('/lists/{list}', [ListController::class, 'destroy']);
+        Route::delete('/cards/{card}', [CardController::class, 'destroy']);
+        Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
+
+
 
         Route::get('boards/{boardId}/activity', [ActivityController::class, 'index']);
 

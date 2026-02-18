@@ -45,4 +45,14 @@ class ListController extends Controller
 
         return response()->json($list, 201);
     }
+
+    public function destroy(Boardlist $list) // use your actual model name
+{
+    $list->delete();
+
+    return response()->json([
+        'message' => 'List deleted'
+    ]);
+}
+
 }
